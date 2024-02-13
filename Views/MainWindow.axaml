@@ -3,11 +3,14 @@
         xmlns:vm="using:Nana.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:v="clr-namespace:Nana.Views"
+        xmlns:vlc="clr-namespace:LibVLCSharp.Avalonia;assembly=LibVLCSharp.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Nana.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="Nana"
+        Opened="OnOpened"
         Background="Transparent">
 
     <Design.DataContext>
@@ -16,6 +19,8 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Button HorizontalAlignment="Center">Watch Library</Button>
+    <Panel>
+        <vlc:VideoView MediaPlayer="{Binding MediaPlayer}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </Panel>
 
 </Window>
