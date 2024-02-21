@@ -1,28 +1,34 @@
 ﻿using System;
-using LibVLCSharp.Shared;
+using System.Diagnostics;
+using System.Reactive;
+using System.Threading;
+using ReactiveUI;
+using Splat;
+using Nana.Models;
 using Nana.Views;
 
 namespace Nana.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase, IDisposable
+public class MainWindowViewModel : ViewModelBase
 {
 #pragma warning disable CA1822 // Mark members as static
-//    public string Greeting => "Sorry! This still under construction.";
-#pragma warning restore CA1822 // Mark members as static
-    private readonly LibVLC _libvlc = new LibVLC();
+    private ViewModelBase _contentViewModel;
+    public HomeViewModel? Home { get; }
+    public ModularPlayerViewModel? ModularPlayer { get; }
     public MainWindowViewModel()
     {
-        MediaPlayer = new MediaPlayer(_libvlc);
+        Home = Locator.Current.GetService<HomeViewModel>();
+        ModularPlayer = Locator.Current.GetService<ModularPlayerViewModel>();
+        _contentViewModel = Home;
     }
-    public void Play()
+    public ViewModelBase ContentViewModel
     {
-        using var media = new Media(_libvlc, new Uri("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
-        MediaPlayer.Play(media);
+        get => _contentViewModel;
+        private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
     }
-    public MediaPlayer MediaPlayer { get; }
-    public void Dispose()
+    public void OpenModularPlayer()
     {
-        MediaPlayer?.Dispose();
-        _libvlc?.Dispose();
+        ContentViewModel = new ModularPlayerViewModel();
     }
+#pragma warning restore CA1822 // Mark members as static
 }
