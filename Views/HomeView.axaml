@@ -7,11 +7,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Nana.Views.HomeView"
              x:DataType="vm:HomeViewModel">
-  <Button DockPanel.Dock="Bottom"
-          HorizontalAlignment="Stretch"
-          HorizontalContentAlignment="Center"
-          x:CompileBindings="False"
-          Command="{Binding $parent[Window].DataContext.OpenModularPlayer}">
-      Player
-  </Button>
+        <StackPanel>
+                <Button DockPanel.Dock="Bottom"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        x:CompileBindings="False"
+                        Command="{Binding $parent[Window].DataContext.OpenModularPlayer}"
+                        Content="{Binding Dummy.Name}">
+                </Button>
+        </StackPanel>
 </UserControl>
