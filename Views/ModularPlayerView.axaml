@@ -11,12 +11,12 @@
   <StackPanel>
     <StackPanel Orientation="Horizontal">
       <Button Command="{Binding Play}">Play</Button>
-      <Button Command="{Binding Pause}">Pause</Button>
+      <Button Command="{Binding PlayPause}">PlayPause</Button>
       <Button Command="{Binding Stop}">Stop</Button>
       <RepeatButton Command="{Binding FastForward}">FastForward</RepeatButton>
       <RepeatButton Command="{Binding Rewind}">Rewind</RepeatButton>
     </StackPanel>
-    <Panel MinHeight="400">
+    <Panel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="400">
       <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" />
     </Panel>
   </StackPanel>

@@ -12,13 +12,5 @@ namespace Nana.Views
         {
             InitializeComponent();
         }
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
-        public void InitButton(object? sender, RoutedEventArgs e)
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
     }
 }
