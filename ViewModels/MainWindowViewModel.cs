@@ -18,7 +18,9 @@ public class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         Home = Locator.Current.GetService<HomeViewModel>();
-        ModularPlayer = Locator.Current.GetService<ModularPlayerViewModel>();
+        ModularPlayer = Locator.Current.GetService<ModularPlayerViewModel>(); 
+        Home = new();
+        ModularPlayer = new();
         _contentViewModel = Home;
     }
     public ViewModelBase ContentViewModel
@@ -28,7 +30,7 @@ public class MainWindowViewModel : ViewModelBase
     }
     public void OpenModularPlayer()
     {
-        ContentViewModel = new ModularPlayerViewModel();
+        ContentViewModel = ModularPlayer;
     }
 #pragma warning restore CA1822 // Mark members as static
 }

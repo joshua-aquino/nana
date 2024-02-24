@@ -1,23 +1,28 @@
 using System;
+using System.Reactive;
 using LibVLCSharp.Shared;
+using ReactiveUI;
 
 namespace Nana.ViewModels
 {
     public class ModularPlayerViewModel : ViewModelBase, IDisposable
     {
         private readonly LibVLC _libVlc = new LibVLC();
-        private Media media;
+        private Media? media;
         private TimeSpan length;
+        public void OpenFile(string path)
+        {
+            media = new Media(_libVlc, path, FromType.FromPath);
+            length = new TimeSpan(0, 0, (int)(media.Duration / 1000));
+        }
         public ModularPlayerViewModel()
         {
-//            media = new Media(_libVlc, new Uri("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
-            media = new Media(_libVlc, "./Assets/orange-tesla.mp4", FromType.FromPath);
             MediaPlayer = new MediaPlayer(_libVlc);
-            length = new TimeSpan(0, 0, (int)(media.Duration / 1000));
         }
         public void Play()
         {
-            MediaPlayer.Play(media);
+            if (media != null)
+                MediaPlayer.Play(media);
         }
         public void PlayPause()
         {

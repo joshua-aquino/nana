@@ -15,5 +15,10 @@
                         Command="{Binding $parent[Window].DataContext.OpenModularPlayer}"
                         Content="{Binding Dummy.Name}">
                 </Button>
+                            <Button Command="{Binding SalamancaBlood}"
+                                    CommandParameter="I need to see your balls.">
+                                    The sos.
+                            </Button>
+                            <TextBlock Text="{Binding Greeting}" />
         </StackPanel>
 </UserControl>
