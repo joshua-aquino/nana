@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Nana.Views.ModularPlayerView"
              x:DataType="vm:ModularPlayerViewModel">
-  <StackPanel>
+  <Canvas>
     <StackPanel Orientation="Horizontal">
       <Button Command="{Binding Play}">Play</Button>
       <Button Command="{Binding PlayPause}">PlayPause</Button>
@@ -19,5 +19,5 @@
     <Panel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="400">
       <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" />
     </Panel>
-  </StackPanel>
+  </Canvas>
 </UserControl>

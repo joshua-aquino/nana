@@ -13,24 +13,28 @@ public class MainWindowViewModel : ViewModelBase
 {
 #pragma warning disable CA1822 // Mark members as static
     private ViewModelBase _contentViewModel;
+    public ReactiveCommand<string, Unit> OpenModularPlayer { get; }
     public HomeViewModel? Home { get; }
     public ModularPlayerViewModel? ModularPlayer { get; }
-    public MainWindowViewModel()
-    {
-        Home = Locator.Current.GetService<HomeViewModel>();
-        ModularPlayer = Locator.Current.GetService<ModularPlayerViewModel>(); 
-        Home = new();
-        ModularPlayer = new();
-        _contentViewModel = Home;
-    }
     public ViewModelBase ContentViewModel
     {
         get => _contentViewModel;
         private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
     }
-    public void OpenModularPlayer()
+    public void _openModularPlayer(string path)
     {
-        ContentViewModel = ModularPlayer;
+        if (ModularPlayer != null)
+        {
+            ContentViewModel = ModularPlayer;
+            ModularPlayer.OpenFile(path);
+        }
+    }
+    public MainWindowViewModel()
+    {
+        Home = Locator.Current.GetService<HomeViewModel>();
+        ModularPlayer = Locator.Current.GetService<ModularPlayerViewModel>(); 
+        _contentViewModel = Home;
+        OpenModularPlayer = ReactiveCommand.Create<string>(_openModularPlayer);
     }
 #pragma warning restore CA1822 // Mark members as static
 }
