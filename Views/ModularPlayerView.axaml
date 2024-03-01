@@ -8,15 +8,45 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Nana.Views.ModularPlayerView"
              x:DataType="vm:ModularPlayerViewModel">
-  <StackPanel>
-    <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="400">
-      <StackPanel Orientation="Horizontal" Background="Gray">
-        <Button Click="Play">Play</Button>
-        <Button Click="PlayPause">PlayPause</Button>
-        <Button Click="Stop">Stop</Button>
-        <RepeatButton Click="FastForward">FastForward</RepeatButton>
-        <RepeatButton Click="Rewind">Rewind</RepeatButton>
-      </StackPanel>
+  <Grid ColumnDefinitions="1*"
+        RowDefinitions="20, *">
+    <StackPanel Orientation="Horizontal"
+                Grid.Column="0" Grid.Row="0"
+                Spacing="10">
+      <TextBlock Text="{Binding CurrentPosition}" />
+      <TextBlock Text="{Binding #slider.Value}" />
+    </StackPanel>
+    <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                    Grid.Column="0" Grid.Row="1">
+      <Grid Background="Gray"
+            ColumnDefinitions="1*"
+            RowDefinitions="*, 50, 100"
+            ShowGridLines="True">
+        <Grid.OpacityMask>
+            <LinearGradientBrush StartPoint="100%,0%" EndPoint="100%,100%">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Offset="0" Color="Transparent"/>
+                    <GradientStop Offset="1" Color="Gray"/>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+        </Grid.OpacityMask>  
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="0" Grid.Row="1"
+                    HorizontalAlignment="Center">
+          <Button Click="Play">Start</Button>
+          <Button Click="Stop">Stop</Button>
+          <Button Click="PlayPause">PlayPause</Button>
+          <RepeatButton Click="FastForward">FastForward</RepeatButton>
+          <RepeatButton Click="Rewind">Rewind</RepeatButton>
+        </StackPanel>
+        <Grid Grid.Column="0" Grid.Row="2"
+              ColumnDefinitions="1*"
+              RowDefinitions="*, *"
+              ShowGridLines="True">
+          <Slider x:Name="slider"
+                  Grid.Column="0" Grid.Row="1"/>
+        </Grid>
+      </Grid>
     </uvlc:VideoView>
-  </StackPanel>
+  </Grid>
 </UserControl>
