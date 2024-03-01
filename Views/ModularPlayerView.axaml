@@ -8,16 +8,15 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Nana.Views.ModularPlayerView"
              x:DataType="vm:ModularPlayerViewModel">
-  <Canvas>
-    <StackPanel Orientation="Horizontal">
-      <Button Command="{Binding Play}">Play</Button>
-      <Button Command="{Binding PlayPause}">PlayPause</Button>
-      <Button Command="{Binding Stop}">Stop</Button>
-      <RepeatButton Command="{Binding FastForward}">FastForward</RepeatButton>
-      <RepeatButton Command="{Binding Rewind}">Rewind</RepeatButton>
-    </StackPanel>
-    <Panel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="400">
-      <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" />
-    </Panel>
-  </Canvas>
+  <StackPanel>
+    <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="400">
+      <StackPanel Orientation="Horizontal" Background="Gray">
+        <Button Click="Play">Play</Button>
+        <Button Click="PlayPause">PlayPause</Button>
+        <Button Click="Stop">Stop</Button>
+        <RepeatButton Click="FastForward">FastForward</RepeatButton>
+        <RepeatButton Click="Rewind">Rewind</RepeatButton>
+      </StackPanel>
+    </uvlc:VideoView>
+  </StackPanel>
 </UserControl>
