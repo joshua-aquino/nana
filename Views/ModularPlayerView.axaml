@@ -13,6 +13,8 @@
     <StackPanel Orientation="Horizontal"
                 Grid.Column="0" Grid.Row="0"
                 Spacing="10">
+      <TextBlock Text="{Binding Dummy}" />
+      <TextBlock Text="{Binding IsPlaying}" />
       <TextBlock Text="{Binding CurrentPosition}" />
       <TextBlock Text="{Binding #slider.Value}" />
     </StackPanel>
