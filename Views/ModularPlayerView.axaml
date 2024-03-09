@@ -7,15 +7,20 @@
              xmlns:uvlc="using:Nana.Libs.LibVLCSharp.Avalonia.Unofficial"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="Nana.Views.ModularPlayerView"
-             x:DataType="vm:ModularPlayerViewModel">
+             x:DataType="vm:ModularPlayerViewModel"
+             >
   <Grid ColumnDefinitions="1*"
-        RowDefinitions="20, *">
+        RowDefinitions="40, *">
     <StackPanel Orientation="Horizontal"
                 Grid.Column="0" Grid.Row="0"
                 Spacing="10">
+      <TextBlock Name="isPlayingText" Text="Didn't work" />
+      <Button Click="UpdateSlider">UpdateSlider</Button>
+      <Button Click="DummyClicc">DummyClicc</Button>
       <TextBlock Text="{Binding IsPlaying}" />
       <TextBlock Text="{Binding CurrentPosition}" />
-      <TextBlock Text="{Binding #slider.Value}" />
+      <TextBlock Text="{Binding CurrentPercentage}" />
+      <TextBlock Text="{Binding #timeSlider.Value}" />
     </StackPanel>
     <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                     Grid.Column="0" Grid.Row="1">
@@ -44,8 +49,9 @@
               ColumnDefinitions="1*"
               RowDefinitions="*, *"
               ShowGridLines="True">
-          <Slider x:Name="slider"
-                  Grid.Column="0" Grid.Row="1"/>
+          <Slider x:Name="timeSlider"
+                  Grid.Column="0" Grid.Row="1"
+                  />
         </Grid>
       </Grid>
     </uvlc:VideoView>

@@ -34,11 +34,22 @@ namespace Nana.ViewModels
             CurrentPosition = TimeSpan.FromMilliseconds(MediaPlayer.Time);
             CurrentPosition = TimeSpan.FromSeconds(Math.Round(CurrentPosition.TotalSeconds));
         }
+        private float _currentPercentage;
+        public float CurrentPercentage
+        {
+            get => _currentPercentage;
+            set => this.RaiseAndSetIfChanged(ref _currentPercentage, value);
+        }
+        public void PrintCurrentPercentage()
+        {
+            CurrentPercentage = MediaPlayer.Position * 100;
+        }
         private Timer timer;
         private TimerCallback timerCallback;
         private void PositionTick(object state)
         {
             PrintCurrentPosition();
+            PrintCurrentPercentage();
         }
         private void AdjustPlayingStatus(object? sender, EventArgs e)
         {
@@ -113,6 +124,7 @@ namespace Nana.ViewModels
                 MediaPlayer.Position = (float)(MediaPlayer.Position + 0.01);
             }
             PrintCurrentPosition();
+            PrintCurrentPercentage();
         }
         public void Rewind()
         {
@@ -126,6 +138,7 @@ namespace Nana.ViewModels
                 MediaPlayer.Position = (float)(MediaPlayer.Position - 0.01);
             }
             PrintCurrentPosition();
+            PrintCurrentPercentage();
         }
         public MediaPlayer MediaPlayer { get; }
         public void Dispose()
