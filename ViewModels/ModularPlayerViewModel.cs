@@ -42,7 +42,7 @@ namespace Nana.ViewModels
         }
         public void PrintCurrentPercentage()
         {
-            CurrentPercentage = MediaPlayer.Position * 100;
+            CurrentPercentage = MediaPlayer.Position;
         }
         private Timer timer;
         private TimerCallback timerCallback;

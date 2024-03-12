@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization.Formatters;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia;
@@ -34,22 +35,29 @@ namespace Nana.Views
         {
             ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = (float)0.69;
         }
-        public async void UpdateSlider(object sender, RoutedEventArgs args)
+        public async void UpdateSlider()
         {
+        float timeSliderValueFloat;
             while (true)
             {
                 await Task.Delay(1000);
-                timeSlider.Value = ((ModularPlayerViewModel)(this.DataContext)).CurrentPercentage;                  // use the timer to check the value of the slider
-                CurrentPercentage = timeSlider.Value;
-            }
-            else
-            {
-                ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = (float)(timeSlider.Value * 0.01);
+                timeSliderValueFloat = (float)(timeSlider.Value);
+                timevaluefloat.Text = timeSliderValueFloat.ToString();
+                if (Math.Abs(timeSliderValueFloat / 100 - ((ModularPlayerViewModel)(this.DataContext)).CurrentPercentage) > 0.02)       // diference is 5% of total time;  wrong!
+                {                                                                                                                       //CLEAN MATH AND MAKE FF WORK
+                    ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = timeSliderValueFloat / 100;
+                }
+                else
+                {
+                    timeSlider.Value = ((ModularPlayerViewModel)(this.DataContext)).CurrentPercentage * 100;                  // use the timer to check the value of the slider
+                    CurrentPercentage = timeSlider.Value;
+                }
             }
         }
         public void Play(object sender, RoutedEventArgs args)
         {
             ((ModularPlayerViewModel)(this.DataContext)).Play();
+            UpdateSlider();
         }
         public void PlayPause(object sender, RoutedEventArgs args)
         {
