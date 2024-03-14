@@ -15,42 +15,37 @@ namespace Nana.Views
 {
     public partial class ModularPlayerView : UserControl
     {
-        public double CurrentPercentage;
+        private bool sliderUpdatable;
         public ModularPlayerView()
         {
+            sliderUpdatable = true;
             InitializeComponent();
-            isPlayingText.Text = "wow";
-            AttachedToVisualTree += OnAttachedToVisualTree;
-            timeSlider.KeyDown += OnTimeSliderPointerReleased;
         }
-        private async void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
+        private void MatchSliderToMedia()
         {
+            timeSlider.Value = ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position * 100;                  // use the timer to check the value of the slider
         }
-        
-        private async void OnTimeSliderPointerReleased(object sender, KeyEventArgs args)
+        private void MatchMediaToSlider()
         {
-            timeSlider.KeyDown -= OnTimeSliderPointerReleased;
+            ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = timeSliderValueFloat / 100;
         }
-        public void DummyClicc(object sender, RoutedEventArgs args)
-        {
-            ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = (float)0.69;
-        }
+        private float timeSliderValueFloat;
         public async void UpdateSlider()
         {
-        float timeSliderValueFloat;
             while (true)
             {
                 await Task.Delay(1000);
                 timeSliderValueFloat = (float)(timeSlider.Value);
                 timevaluefloat.Text = timeSliderValueFloat.ToString();
-                if (Math.Abs(timeSliderValueFloat / 100 - ((ModularPlayerViewModel)(this.DataContext)).CurrentPercentage) > 0.02)       // diference is 5% of total time;  wrong!
+                if (Math.Abs(timeSliderValueFloat / 100 - ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position) > 0.02
+                    && sliderUpdatable == true)       // diference is 5% of total time;  wrong!
                 {                                                                                                                       //CLEAN MATH AND MAKE FF WORK
-                    ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = timeSliderValueFloat / 100;
+                    MatchMediaToSlider();
                 }
                 else
                 {
-                    timeSlider.Value = ((ModularPlayerViewModel)(this.DataContext)).CurrentPercentage * 100;                  // use the timer to check the value of the slider
-                    CurrentPercentage = timeSlider.Value;
+                    MatchSliderToMedia();
+                    sliderUpdatable = true;
                 }
             }
         }
@@ -69,11 +64,19 @@ namespace Nana.Views
         }
         public void FastForward(object sender, RoutedEventArgs args)
         {
+            sliderUpdatable = false;
             ((ModularPlayerViewModel)(this.DataContext)).FastForward();
+            MatchSliderToMedia();
         }
         public void Rewind(object sender, RoutedEventArgs args)
         {
+            sliderUpdatable = false;
             ((ModularPlayerViewModel)(this.DataContext)).Rewind();
+            MatchSliderToMedia();
+        }
+        public void ClickSlider(object sender, PointerPressedEventArgs args)
+        {
+            ((ModularPlayerViewModel)(this.DataContext)).PrintCurrentPosition();
         }
     }
 }

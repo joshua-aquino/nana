@@ -14,16 +14,10 @@
     <StackPanel Orientation="Horizontal"
                 Grid.Column="0" Grid.Row="0"
                 Spacing="10">
-      <TextBlock Name="isPlayingText" Text="Didn't work" />
-      <Button Click="DummyClicc">DummyClicc</Button>
-      <TextBlock Text="{Binding IsPlaying}" />
       <TextBlock Text="{Binding CurrentPosition}" />
-      <TextBlock Text="{Binding CurrentPercentage}" />
       <TextBlock Text="{Binding #timeSlider.Value}" />
       <TextBlock Text="TimeValueFloat:" />
       <TextBlock Name="timevaluefloat" Text="hi" />
-      <TextBlock Text="MediaPlayer.Position:" />
-      <TextBlock Name="mediaplayerposition " Text="{Binding CurrentPercentage}" />
     </StackPanel>
     <uvlc:VideoView MediaPlayer="{Binding MediaPlayer}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                     Grid.Column="0" Grid.Row="1">
@@ -54,6 +48,7 @@
               ShowGridLines="True">
           <Slider x:Name="timeSlider"
                   Grid.Column="0" Grid.Row="1"
+                  PointerPressed="ClickSlider"
                   />
         </Grid>
       </Grid>
