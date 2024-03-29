@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Reactive;
+using System.Reflection;
+using DynamicData;
 using Nana.Models;
 using ReactiveUI;
 
@@ -7,6 +10,7 @@ namespace Nana.ViewModels;
 public class HomeViewModel : ViewModelBase
 {
     public MediaEntry Dummy { get; }
+    public List<MediaEntry> Videos { get; set; }
     public class MediaEntry
     {
         private readonly string _path;
@@ -20,6 +24,12 @@ public class HomeViewModel : ViewModelBase
     }
     public HomeViewModel()
     {
-        Dummy = new("./Assets/orange-tesla.mp4");
+        Videos = [];
+        string[] files = System.IO.Directory.GetFiles("./Assets", "*.mp4");
+        foreach (var file in System.IO.Directory.GetFiles("./Assets", "*.mp4"))
+        {
+            Videos.Add(new MediaEntry(file));
+        }
+        Dummy = Videos[0];
     }        
 }

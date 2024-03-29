@@ -13,8 +13,8 @@
                         HorizontalContentAlignment="Center"
                         x:CompileBindings="False"
                         Command="{Binding $parent[Window].DataContext.OpenModularPlayer}"
-                        CommandParameter="{Binding Dummy.Name}"
-                        Content="{Binding Dummy.Name}">
+                        CommandParameter="{Binding Videos[0].Name}"
+                        Content="{Binding Videos[0].Name}">
                 </Button>
                 <Button DockPanel.Dock="Bottom"
                         HorizontalAlignment="Stretch"
