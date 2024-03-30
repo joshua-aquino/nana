@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Reactive;
 using System.Reflection;
@@ -10,7 +11,7 @@ namespace Nana.ViewModels;
 public class HomeViewModel : ViewModelBase
 {
     public MediaEntry Dummy { get; }
-    public List<MediaEntry> Videos { get; set; }
+    public ObservableCollection<MediaEntry> Videos { get; set; }
     public class MediaEntry
     {
         private readonly string _path;
