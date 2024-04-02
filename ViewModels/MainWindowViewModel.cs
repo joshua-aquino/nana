@@ -6,6 +6,7 @@ using ReactiveUI;
 using Splat;
 using Nana.Models;
 using Nana.Views;
+using System.Reactive.Linq;
 
 namespace Nana.ViewModels;
 
@@ -25,16 +26,22 @@ public class MainWindowViewModel : ViewModelBase
     {
         if (ModularPlayer != null)
         {
+            Observable.Merge(ModularPlayer.StopCommand).Take(1).Subscribe( _ =>
+                {
+                    ContentViewModel = Home;
+                }
+            );
             ContentViewModel = ModularPlayer;
             ModularPlayer.OpenFile(path);
         }
     }
+
     public MainWindowViewModel()
     {
         Home = Locator.Current.GetService<HomeViewModel>();
         ModularPlayer = Locator.Current.GetService<ModularPlayerViewModel>(); 
-        _contentViewModel = Home;
         OpenModularPlayer = ReactiveCommand.Create<string>(_openModularPlayer);
+        _contentViewModel = Home;
     }
 #pragma warning restore CA1822 // Mark members as static
 }

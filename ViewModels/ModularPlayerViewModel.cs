@@ -9,9 +9,10 @@ namespace Nana.ViewModels
 {
     public class ModularPlayerViewModel : ViewModelBase, IDisposable
     {
+        public ReactiveCommand<Unit, Unit> StopCommand { get; }
         private readonly LibVLC _libVlc = new LibVLC();
         private Media? media;
-        private bool _isPlaying = false;
+        private bool _isPlaying;
         public bool IsPlaying 
         {
             get => _isPlaying;
@@ -61,6 +62,7 @@ namespace Nana.ViewModels
         {
             media = new Media(_libVlc, path, FromType.FromPath);
             Length = new TimeSpan(0, 0, (int)(media.Duration / 1000));
+            IsPlaying = false;
         }
         private void WatchPlaybackEvent(bool watching)
         {
@@ -77,6 +79,7 @@ namespace Nana.ViewModels
         }
         public ModularPlayerViewModel()
         {
+            StopCommand = ReactiveCommand.Create(Stop);
             MediaPlayer = new MediaPlayer(_libVlc);
             timerCallback = new TimerCallback(PositionTick);
         }
