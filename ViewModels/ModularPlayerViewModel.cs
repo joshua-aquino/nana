@@ -12,6 +12,12 @@ namespace Nana.ViewModels
         public ReactiveCommand<Unit, Unit> StopCommand { get; }
         private readonly LibVLC _libVlc = new LibVLC();
         private Media? media;
+        private bool _sliderUpdateable = true;
+        public bool SliderUpdatable 
+        {
+            get => _sliderUpdateable;
+            set => this.RaiseAndSetIfChanged(ref _sliderUpdateable, value);
+        }
         private bool _sliderEnabled = false;
         public bool SliderEnabled 
         {

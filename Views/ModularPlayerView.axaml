@@ -38,7 +38,6 @@
                     Grid.Column="0" Grid.Row="1"
                     HorizontalAlignment="Center">
           <Button Click="Load">Start</Button>
-          <Button Click="Stop">Stop</Button>
           <Button Click="PlayPause">PlayPause</Button>
           <RepeatButton Click="FastForward">FastForward</RepeatButton>
           <RepeatButton Click="Rewind">Rewind</RepeatButton>
