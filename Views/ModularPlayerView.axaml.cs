@@ -1,15 +1,8 @@
 using System;
-using System.Runtime.Serialization.Formatters;
-using System.Threading;
 using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.LogicalTree;
-using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
 using Nana.ViewModels;
 
 namespace Nana.Views
@@ -28,17 +21,14 @@ namespace Nana.Views
         }
         private void MatchMediaToSlider()
         {
-            ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = timeSliderValueFloat / 100;
+            ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position = ((float)(timeSlider.Value)) / 100;
         }
-        private float timeSliderValueFloat;
-        public async void UpdateSlider()
+        public async void UpdateSlider()// the problem comes from the here
         {
-            while (true)
+            while (((ModularPlayerViewModel)(this.DataContext)).SliderEnabled)
             {
-                await Task.Delay(1000);
-                timeSliderValueFloat = (float)(timeSlider.Value);
-                timevaluefloat.Text = timeSliderValueFloat.ToString();
-                if (Math.Abs(timeSliderValueFloat / 100 - ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position) > 0.02
+                timevaluefloat.Text = ((float)(timeSlider.Value)).ToString();
+                if (Math.Abs(((float)(timeSlider.Value)) / 100 - ((ModularPlayerViewModel)(this.DataContext)).MediaPlayer.Position) > 0.02
                     && sliderUpdatable == true)       // diference is 5% of total time;  wrong!
                 {                                                                                                                       //CLEAN MATH AND MAKE FF WORK
                     MatchMediaToSlider();
@@ -48,11 +38,12 @@ namespace Nana.Views
                     MatchSliderToMedia();
                     sliderUpdatable = true;
                 }
+                await Task.Delay(1000); 
             }
         }
-        public void Play(object sender, RoutedEventArgs args)
+        public void Load(object sender, RoutedEventArgs args)
         {
-            ((ModularPlayerViewModel)(this.DataContext)).Play();
+            ((ModularPlayerViewModel)(this.DataContext)).Load();
             UpdateSlider();
         }
         public void PlayPause(object sender, RoutedEventArgs args)

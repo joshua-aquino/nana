@@ -12,17 +12,17 @@ namespace Nana.ViewModels
         public ReactiveCommand<Unit, Unit> StopCommand { get; }
         private readonly LibVLC _libVlc = new LibVLC();
         private Media? media;
+        private bool _sliderEnabled = false;
+        public bool SliderEnabled 
+        {
+            get => _sliderEnabled;
+            set => this.RaiseAndSetIfChanged(ref _sliderEnabled, value);
+        }
         private bool _isPlaying;
         public bool IsPlaying 
         {
             get => _isPlaying;
             set => this.RaiseAndSetIfChanged(ref _isPlaying, value);
-        }
-        private TimeSpan _length;
-        public TimeSpan Length
-        {
-            get => _length;
-            set => this.RaiseAndSetIfChanged(ref _length, value);
         }
         private TimeSpan _currentPosition;
         public TimeSpan CurrentPosition
@@ -61,7 +61,6 @@ namespace Nana.ViewModels
         public void OpenFile(string path)
         {
             media = new Media(_libVlc, path, FromType.FromPath);
-            Length = new TimeSpan(0, 0, (int)(media.Duration / 1000));
             IsPlaying = false;
         }
         private void WatchPlaybackEvent(bool watching)
@@ -83,8 +82,9 @@ namespace Nana.ViewModels
             MediaPlayer = new MediaPlayer(_libVlc);
             timerCallback = new TimerCallback(PositionTick);
         }
-        public void Play()
+        public void Load()
         {
+            SliderEnabled = true;
             if (media != null)
             {
                 WatchPlaybackEvent(true);
@@ -102,6 +102,7 @@ namespace Nana.ViewModels
         }
         public void Stop()
         {
+            SliderEnabled = false;
             MediaPlayer.Stop();
         }
         public void FastForward()
